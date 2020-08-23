@@ -1,12 +1,14 @@
+from bot_service.resrc_service import get_facebook_user
+
 
 class Facebook:
-    def __init__(self, driver_type, driver_path, cookie, facebook_id, username, action_script):
+    def __init__(self, driver_type, driver_path, facebook_id):
         self.driver_type = driver_type
         self.driver_path = driver_path
-        self.cookie = cookie
+        self.cookie = None
         self.facebook_id = facebook_id
-        self.username = username
-        self.action_script = action_script
+        self.username = None
+        self.action_script = None
         self.facebook_action_list = []
 
     def get_action_script(self):
@@ -36,6 +38,17 @@ class Facebook:
 
     def update_cookie_to_server(self):
         pass
+
+    def get_facebook_user_account(self):
+        data_user = get_facebook_user()
+        if data_user['is_email']:
+            self.username = data_user['email']
+        else:
+            self.username = data_user['phone']
+
+        self.cookie = data_user['cookie']
+
+
 
 
 
